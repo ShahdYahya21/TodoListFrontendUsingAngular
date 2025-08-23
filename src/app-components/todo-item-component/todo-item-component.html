@@ -1,7 +1,7 @@
 @if(localTodoItem){
 <div class="todoItemContainer">
    <div class="task" [ngStyle]="localTodoItem.completed ? constants.STYLES.COMPLETED_TASK : {}">
-      {{ localTodoItem.task }}</div>
+      {{ localTodoItem.taskTitle }}</div>
    <div class="completedContainer">
       <input type="checkbox" class="completed" [checked]="localTodoItem.completed" (click)="completeMark()" />
    </div>

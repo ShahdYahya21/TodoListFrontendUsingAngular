@@ -1,6 +1,6 @@
 export type TodoItem = {
   id: number;
-  task: string;
+  taskTitle: string;
   completed: boolean;
   markAsDeleted: boolean;
   markAsUpdated: boolean; 

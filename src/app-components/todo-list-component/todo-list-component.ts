@@ -19,25 +19,34 @@ export class TodoListComponent {
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-    this.todoTasks = this.todoService.getTasks();
+    this.getTodos();
 
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['todoTask'] && changes['todoTask'].currentValue) {
-      this.todoService.addTask(this.todoTask);
-      this.todoTask = '';
+      this.todoService.addTask(this.todoTask).subscribe(tasks => {
+        this.todoTasks = tasks;  
+        console.log("todoTasks after addition: ");
+        console.log(this.todoTasks);
+        this.todoTask = '';
+      });
+  
     }
 
-    if (changes['searchedTodoItem']) {
-      this.todoTasks = this.searchedTodoItem
-        ? this.todoService.searchTasks(this.searchedTodoItem)
-        : this.todoService.getTasks();
-    }
+    // if (changes['searchedTodoItem']) {
+    //   this.todoTasks = this.searchedTodoItem
+    //     ? this.todoService.searchTasks(this.searchedTodoItem)
+    //     : this.todoService.getTasks();
+    // }
   }
 
-  getTodos() {
-    this.todoTasks = this.todoService.getTasks();
-  }
+getTodos() {
+  this.todoService.getTasks().subscribe(tasks => {
+    this.todoTasks = tasks;  
+    console.log("todoTasks after fetching from backend: ");
+    console.log(this.todoTasks);
+  });
 
 
+}
 }
