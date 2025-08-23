@@ -17,10 +17,11 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 export class TodoItemComponent {
   constants = TODO_CONSTANTS;
   updatedTaskName = new FormControl('');
+  markAsDeleted = false;
 
   constructor(private todoService: TodoService) { }
 
-  @Output() changeOnTheList = new EventEmitter<void>();
+  @Output() deleteItem = new EventEmitter<number>(); 
   @Input() todoItem: TodoItem | null = null;
 
   localTodoItem: TodoItem | null = null;
@@ -39,9 +40,8 @@ export class TodoItemComponent {
   
   deleteTodo() {
     if (this.localTodoItem) {
-      this.localTodoItem.markAsDeleted = false;
-      this.todoService.deleteTask(this.localTodoItem.id);
-      this.changeOnTheList.emit();
+      this.markAsDeleted = false;
+      this.deleteItem.emit(this.localTodoItem.id);
 
     }
   }
@@ -53,7 +53,7 @@ export class TodoItemComponent {
       this.todoService.updateTask(this.localTodoItem.id, updatedTask);
       this.localTodoItem.markAsUpdated = false;
       this.updatedTaskName.reset();
-      this.changeOnTheList.emit();
+    //  this.changeOnTheList.emit();
 
       }
   }     

@@ -18,19 +18,19 @@ export class TodoService {
 
 
   addTask(newTask: string): Observable<TodoItem[]> {
-    return this.http.post<TodoItem[]>('http://localhost:8080/Todo/saveTodoItem', newTask );
+    return this.http.post<TodoItem[]>('http://localhost:8080/Todo/saveTodoItem', newTask);
   }
 
 
 
-  getTasks(): Observable<TodoItem[]>  {
-   return this.http.get<TodoItem[]>('http://localhost:8080/Todo/getTodoItems');
+  getTasks(): Observable<TodoItem[]> {
+    return this.http.get<TodoItem[]>('http://localhost:8080/Todo/getTodoItems');
   }
 
 
 
-  deleteTask(todoID: number) {
-    this.todoItems = this.todoItems.filter(todo => todo.id !== todoID);
+  deleteTask(todoID: number): Observable<TodoItem[]> {
+    return this.http.delete<TodoItem[]>(`http://localhost:8080/Todo/deleteTodoItem/${todoID}`);
   }
 
 

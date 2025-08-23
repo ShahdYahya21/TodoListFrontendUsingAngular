@@ -22,14 +22,14 @@
       }
    </div>
    <div class="deleteContainer">
-      <button class="delete" (click)="localTodoItem.markAsDeleted = true">{{ constants.BUTTON_LABELS.DELETE }}</button>
-      @if(localTodoItem.markAsDeleted){
+      <button class="delete" (click)="markAsDeleted = true">{{ constants.BUTTON_LABELS.DELETE }}</button>
+      @if(markAsDeleted){
       <div class="overlay">
          <div class="promptMessage">
             <p class="deleteMessage">{{ constants.MESSAGES.DELETE_CONFIRMATION }}</p>
             <button class="deleteButton" (click)="deleteTodo()">{{
                constants.BUTTON_LABELS.DELETE }}</button>
-            <button class="cancelButton" (click)="localTodoItem.markAsDeleted = false">{{ constants.BUTTON_LABELS.CANCEL
+            <button class="cancelButton" (click)="markAsDeleted = false">{{ constants.BUTTON_LABELS.CANCEL
                }}</button>
          </div>
       </div>

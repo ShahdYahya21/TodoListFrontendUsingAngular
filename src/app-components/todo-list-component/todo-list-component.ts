@@ -46,7 +46,14 @@ getTodos() {
     console.log("todoTasks after fetching from backend: ");
     console.log(this.todoTasks);
   });
-
-
 }
+
+deleteTodo(todoId: number) {
+  this.todoService.deleteTask(todoId).subscribe(tasks => {
+    this.todoTasks = tasks;  
+    console.log("todoTasks after deletion: ");
+    console.log(this.todoTasks);
+  });
+}
+
 }
