@@ -1,0 +1,39 @@
+@if(localTodoItem){
+<div class="todoItemContainer">
+   <div class="task" [ngStyle]="localTodoItem.completed ? constants.STYLES.COMPLETED_TASK : {}">
+      {{ localTodoItem.task }}</div>
+   <div class="completedContainer">
+      <input type="checkbox" class="completed" [checked]="localTodoItem.completed" (click)="completeMark()" />
+   </div>
+   <div class="updateContainer">
+      <button class="update" (click)="localTodoItem.markAsUpdated = true">{{ constants.BUTTON_LABELS.UPDATE }}</button>
+      @if(localTodoItem.markAsUpdated){
+      <div class="overlay">
+         <div class="promptMessage">
+            <p class="updateMessage">{{ constants.MESSAGES.Update_MESSAGE }}</p>
+            <input class="updateInput" type="text" [formControl]="updatedTaskName"
+               [placeholder]="constants.PLACEHOLDER.UPDATE_TASK_PLACEHOLDER" />
+            <button class="updateButton" (click)="updateTodo()">{{
+               constants.BUTTON_LABELS.UPDATE }}</button>
+            <button class="cancelButton" (click)="resetText()">{{ constants.BUTTON_LABELS.CANCEL
+               }}</button>
+         </div>
+      </div>
+      }
+   </div>
+   <div class="deleteContainer">
+      <button class="delete" (click)="localTodoItem.markAsDeleted = true">{{ constants.BUTTON_LABELS.DELETE }}</button>
+      @if(localTodoItem.markAsDeleted){
+      <div class="overlay">
+         <div class="promptMessage">
+            <p class="deleteMessage">{{ constants.MESSAGES.DELETE_CONFIRMATION }}</p>
+            <button class="deleteButton" (click)="deleteTodo()">{{
+               constants.BUTTON_LABELS.DELETE }}</button>
+            <button class="cancelButton" (click)="localTodoItem.markAsDeleted = false">{{ constants.BUTTON_LABELS.CANCEL
+               }}</button>
+         </div>
+      </div>
+      }
+   </div>
+</div>
+}

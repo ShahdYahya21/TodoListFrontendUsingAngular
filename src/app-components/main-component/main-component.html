@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>To Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="webpage">
+  <p class="pageTitle">{{ constants.PAGE_TITLE }}</p>
+  <div class="page">
+    <div class="addTaskPrompt">{{ constants.TASK_PROMPT }}</div>
+    <div class="addTaskContainer">
+      <div class="input">
+        <input class="taskInput" type="text" [formControl]="newTask" [placeholder]="constants.TASK_PLACEHOLDER" />
+      </div>
+      <div>
+        <button (click)="submit()" class="submitButton">{{ constants.SUBMIT_BUTTON }}</button>
+      </div>
+    </div>
+    <div class="errorContainer">
+      @if((newTask.invalid || trimmedTask === '') && submitted) {
+      <p class="error">{{ constants.VALIDATION_MESSAGES.NEW_TASK_REQUIRED }}</p>
+      }
+    </div>
+    <div class="addTaskPrompt">{{ constants.SEARCH_PROMPT }}</div>
+    <div class="searchContainer">
+      <input class="taskSearch" type="text" [formControl]="SearchedTask" [placeholder]="constants.SEARCH_PLACEHOLDER" />
+    </div>
+    <div class="tableHeader">
+      <div class="task">{{ constants.TABLE_HEADERS.TASK }}</div>
+      <div class="completed">{{ constants.TABLE_HEADERS.COMPLETED }}</div>
+      <div class="update">{{ constants.TABLE_HEADERS.UPDATE }}</div>
+      <div class="delete">{{ constants.TABLE_HEADERS.DELETE }}</div>
+    </div>
+
+    <app-todo-list-component [searchedTodoItem]="SearchedTask.value" [todoTask]="newTaskName">
+    </app-todo-list-component>
+  </div>
+</body>

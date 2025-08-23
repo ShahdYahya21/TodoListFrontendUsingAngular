@@ -1,0 +1,122 @@
+.todoItemContainer{
+    display: grid;
+    grid-template-columns: 190px 175px 175px 100px;
+    align-items: center;
+    margin-left : 400px;
+    width: 600px;
+    height: 50px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #ccc;
+    word-wrap: break-word;
+    margin: 0px auto;
+
+     
+}
+.delete{
+     background-color: rgb(198, 10, 10);
+}
+.update{
+    background-color: rgb(4, 136, 17);
+}
+.delete,.update{
+    color: white;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Roboto";
+    font-size: 14px;
+}
+
+
+.completed{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.task{
+    font-size: 15px;
+    font-family: "Roboto";
+    margin-right: 40px;
+    margin-left: 5px;
+
+
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.promptMessage{
+    background-color: white;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: "Roboto";
+   
+}
+
+.deleteMessage,.updateMessage{
+    font-size: 16px;
+    font-weight: bold;
+
+
+}
+
+.deleteButton, .cancelButton,.updateButton{
+    font-size: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white;
+    border : none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.deleteButton{
+    background-color: rgb(201, 14, 14);
+    margin-left: 60px;
+    margin-right: 50px;
+    
+}
+
+.updateButton{
+    background-color: rgb(4, 136, 17);
+    margin-left: 60px;
+    margin-right: 50px;
+    
+}
+.cancelButton{
+    background-color: rgb(46, 83, 195); 
+}
+
+.updateInput{
+    font-size: 14px;
+    font-family: "Roboto";
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 300px;    
+    padding-left: 5px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

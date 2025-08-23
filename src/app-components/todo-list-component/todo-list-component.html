@@ -1,0 +1,3 @@
+@for (task of todoTasks; track task.id) {
+  <app-todo-item-component [todoItem]="task" (changeOnTheList)="getTodos()"></app-todo-item-component>
+}
