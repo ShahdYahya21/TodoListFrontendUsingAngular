@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { TodoItem } from './models';
+import { TodoItem,CreateTodoItemDTO } from './models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
@@ -18,8 +18,8 @@ export class TodoService {
 
 
 
-  addTask(newTask: string): Observable<TodoItem[]> {
-    return this.http.post<TodoItem[]>('http://localhost:8080/Todo/saveTodoItem', newTask);
+  addTask(todoItem : CreateTodoItemDTO): Observable<TodoItem[]> {
+    return this.http.post<TodoItem[]>('http://localhost:8080/Todo/saveTodoItem', todoItem);
   }
 
 
@@ -43,8 +43,8 @@ export class TodoService {
 
 
 
-  updateTask(todoID: number, updatedTask: string): Observable<TodoItem[]> {
-    return this.http.put<TodoItem[]>(`http://localhost:8080/Todo/toggleCompletionStatus/${todoID}`, updatedTask);
+  updateTask(todoItem: TodoItem): Observable<TodoItem[]> {
+    return this.http.put<TodoItem[]>(`http://localhost:8080/Todo/updateTodoItem`, todoItem);
 
   }
 

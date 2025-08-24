@@ -54,7 +54,15 @@ export class TodoItemComponent {
     }
     this.updateButtonPressed = false;
     if (this.localTodoItem) {
-      this.todoActions.emit({ update: { toDoId: this.localTodoItem.id, newTaskTitle: this.trimmedUpdatedTask } });
+      this.todoActions.emit({
+        update: {
+          todoItem: {
+            id: this.localTodoItem.id,
+            taskTitle: this.trimmedUpdatedTask,
+            completed: this.localTodoItem.completed
+          }
+        }
+      });
       this.updatedTaskName.reset();
 
     }
