@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { TodoItemComponent } from '../todo-item-component/todo-item-component';
 import { TodoService } from '../../todo-service';
 import { TodoItem } from '../../models';
+import { TodoActions } from '../../models';
 
 
 @Component({
@@ -39,6 +40,17 @@ export class TodoListComponent {
     //     : this.todoService.getTasks();
     // }
   }
+    // Handle the change emitted from the child component
+  handleChange(action: TodoActions): void {
+    if (action.deleteId) {
+      this.deleteTodo(action.deleteId);
+    } else if (action.toggleId) {
+      this.toggleState(action.toggleId);
+    } else if (action.update) {
+      this.updateTodo(action.update.toDoId, action.update.newTaskTitle);
+    }
+  }
+
 
 getTodos() {
   this.todoService.getTasks().subscribe(tasks => {
@@ -55,5 +67,19 @@ deleteTodo(todoId: number) {
     console.log(this.todoTasks);
   });
 }
+toggleState(todoId: number) {
+  this.todoService.toggleTheCompletionStatus(todoId).subscribe(tasks => {
+    this.todoTasks = tasks;  
+    console.log("todoTasks after toggling completion status: ");
+    console.log(this.todoTasks);
+  });
+}
 
+updateTodo(toDoId : number, newTaskTitle : string) {
+  this.todoService.updateTask(toDoId, newTaskTitle).subscribe(tasks => {
+    this.todoTasks = tasks;  
+    console.log("todoTasks after updating task: ");
+    console.log(this.todoTasks);
+  });
+}
 }

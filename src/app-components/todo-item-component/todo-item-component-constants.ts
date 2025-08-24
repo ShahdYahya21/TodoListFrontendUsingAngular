@@ -1,7 +1,8 @@
 export const TODO_CONSTANTS = {
   MESSAGES: {
     DELETE_CONFIRMATION: 'Are you sure you want to delete this to-do task?',
-    Update_MESSAGE: 'Are you sure you want to update this to-do task?'
+    Update_MESSAGE: 'Are you sure you want to update this to-do task?',
+    TASK_REQUIRED: 'Task is required'
   },
   BUTTON_LABELS: {
     DELETE: 'Delete',

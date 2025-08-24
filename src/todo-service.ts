@@ -35,25 +35,16 @@ export class TodoService {
 
 
 
-  toggleTheCompletionStatus(todoID: number): TodoItem {
-    for (const task of this.todoItems) {
-      if (task.id === todoID) {
-        task.completed = !task.completed;
-        return task;
-
-      }
-    }
-    throw new Error('Task not found');
+  toggleTheCompletionStatus(todoID: number): Observable<TodoItem[]> {
+    return this.http.put<TodoItem[]>(`http://localhost:8080/Todo/toggleCompletionStatus/${todoID}`, {});
   }
 
-  updateTask(todoID: number, updatedTask: string): TodoItem {
-    for (const task of this.todoItems) {
-      if (task.id === todoID) {
-        task.taskTitle = updatedTask.trimStart();
-        return task;
-      }
-    }
-    throw new Error('Task not found');
+
+
+
+  updateTask(todoID: number, updatedTask: string): Observable<TodoItem[]>{
+    return this.http.put<TodoItem[]>(`http://localhost:8080/Todo/updateTodoItem/${todoID}`, updatedTask);
+
   }
 
 
@@ -63,13 +54,5 @@ export class TodoService {
       item.taskTitle.toLowerCase().startsWith(lowerQuery)
     );
   }
-
-  // private loadFromCookie(): void {
-  //   const cookie = this.cookieService.get('TestCookie');
-  //   if (cookie) {
-  //     this.todoItems = JSON.parse(cookie);
-  //   } else {
-  //     this.todoItems = [];
-  //   }
-  // }
 }
+
