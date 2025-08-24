@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { TodoItem } from './models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -42,17 +43,16 @@ export class TodoService {
 
 
 
-  updateTask(todoID: number, updatedTask: string): Observable<TodoItem[]>{
-    return this.http.put<TodoItem[]>(`http://localhost:8080/Todo/updateTodoItem/${todoID}`, updatedTask);
+  updateTask(todoID: number, updatedTask: string): Observable<TodoItem[]> {
+    return this.http.put<TodoItem[]>(`http://localhost:8080/Todo/toggleCompletionStatus/${todoID}`, updatedTask);
 
   }
 
 
-  searchTasks(task: string): TodoItem[] {
-    const lowerQuery = task.trimStart().toLowerCase();
-    return this.todoItems.filter(item =>
-      item.taskTitle.toLowerCase().startsWith(lowerQuery)
-    );
+  searchTasks(task: string): Observable<TodoItem[]> {
+    const params = new HttpParams().set('task', task); 
+    return this.http.get<TodoItem[]>('http://localhost:8080/Todo/searchForTodoItem', { params });
   }
+
 }
 

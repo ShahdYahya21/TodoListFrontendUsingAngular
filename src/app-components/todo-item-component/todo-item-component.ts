@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TodoService } from '../../todo-service';
 import { NgStyle } from '@angular/common';
 import { TodoItem } from '../../models';
 import { TODO_CONSTANTS } from './todo-item-component-constants';
@@ -23,13 +22,7 @@ export class TodoItemComponent {
   trimmedUpdatedTask = '';
 
 
-  constructor(private todoService: TodoService) { }
-
   @Output() todoActions = new EventEmitter<TodoActions>();
-
-  @Output() deleteItem = new EventEmitter<number>();
-  @Output() toggleCompletionState = new EventEmitter<number>();
-  @Output() updateItem = new EventEmitter<{ toDoId: number, newTaskTitle: string }>();
   @Input() todoItem: TodoItem | null = null;
 
   localTodoItem: TodoItem | null = null;

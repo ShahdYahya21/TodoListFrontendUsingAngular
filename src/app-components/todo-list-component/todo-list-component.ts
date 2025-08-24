@@ -34,13 +34,16 @@ export class TodoListComponent {
   
     }
 
-    // if (changes['searchedTodoItem']) {
-    //   this.todoTasks = this.searchedTodoItem
-    //     ? this.todoService.searchTasks(this.searchedTodoItem)
-    //     : this.todoService.getTasks();
-    // }
-  }
-    // Handle the change emitted from the child component
+    if (changes['searchedTodoItem'] && changes['searchedTodoItem'].currentValue !== changes['searchedTodoItem'].previousValue) {
+      this.todoService.searchTasks(this.searchedTodoItem).subscribe(tasks => {
+        this.todoTasks = tasks;
+        console.log("todoTasks after searching: ");
+        console.log(this.todoTasks);
+      });
+    }
+  
+}
+
   handleChange(action: TodoActions): void {
     if (action.deleteId) {
       this.deleteTodo(action.deleteId);
