@@ -7,30 +7,32 @@
    </div>
    <div class="updateContainer">
       <button class="update" (click)="updateButtonPressed = true">{{ constants.BUTTON_LABELS.UPDATE }}</button>
-      @if(updateButtonPressed){
+      @if(updateButtonPressed) {
       <div class="overlay">
          <div class="promptMessage">
             <div>
-            <p class="updateMessage">{{ constants.MESSAGES.Update_MESSAGE }}</p>
+               <p class="updateMessage">{{ constants.MESSAGES.Update_MESSAGE }}</p>
             </div>
             <div>
-            <input class="updateInput" type="text" [formControl]="updatedTaskName"
-               [placeholder]="constants.PLACEHOLDER.UPDATE_TASK_PLACEHOLDER" />
+               <input class="updateInput" type="text" [formControl]="updatedTaskName"
+                  [placeholder]="constants.PLACEHOLDER.UPDATE_TASK_PLACEHOLDER" />
             </div>
             <div>
-            <button class="updateButton" (click)="updateTodo()">{{
-               constants.BUTTON_LABELS.UPDATE }}</button>
-            <button class="cancelButton"  (click)="resetText()">{{ constants.BUTTON_LABELS.CANCEL
-               }}</button>
+               <button class="updateButton" (click)="updateTodo()">
+                  {{ constants.BUTTON_LABELS.UPDATE }}
+               </button>
+               <button class="cancelButton" (click)="resetText()">
+                  {{ constants.BUTTON_LABELS.CANCEL }}
+               </button>
             </div>
-            <div class="errorContainer">
-               @if(updatedTaskName.invalid && updateButtonPressed) {
-               <p class="error">{{ constants.MESSAGES.TASK_REQUIRED }}</p>
-               }    
-            </div> 
+
+            @if((updatedTaskName.invalid || trimmedUpdatedTask === '') && confirmationButtonPressed){
+            <p class="error">{{ constants.MESSAGES.TASK_REQUIRED }}</p>
+            }
          </div>
       </div>
       }
+
    </div>
    <div class="deleteContainer">
       <button class="delete" (click)="markAsDeleted = true">{{ constants.BUTTON_LABELS.DELETE }}</button>

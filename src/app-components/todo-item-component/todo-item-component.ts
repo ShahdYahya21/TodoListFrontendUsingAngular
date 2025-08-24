@@ -16,9 +16,10 @@ import { TodoActions } from '../../models';
 })
 export class TodoItemComponent {
   constants = TODO_CONSTANTS;
-  updatedTaskName = new FormControl('');
+  updatedTaskName = new FormControl('', Validators.required);
   markAsDeleted = false;
   updateButtonPressed = false;
+  confirmationButtonPressed = false;
   trimmedUpdatedTask = '';
 
 
@@ -46,13 +47,12 @@ export class TodoItemComponent {
   }
 
   updateTodo() {
-    this.updateButtonPressed = true;
+    this.confirmationButtonPressed = true;
     this.trimmedUpdatedTask = (this.updatedTaskName.value ?? '').trim();
 
     if (this.updatedTaskName.invalid || this.trimmedUpdatedTask === '') {
       return;
     }
-    this.updateButtonPressed = false;
     if (this.localTodoItem) {
       this.todoActions.emit({
         update: {
@@ -64,6 +64,8 @@ export class TodoItemComponent {
         }
       });
       this.updatedTaskName.reset();
+      this.updateButtonPressed = false;
+      this.confirmationButtonPressed = false;
 
     }
   }
@@ -72,8 +74,10 @@ export class TodoItemComponent {
 
   resetText() {
     if (this.localTodoItem) {
-      this.updateButtonPressed = false
+      this.updateButtonPressed = false;
       this.updatedTaskName.reset();
+      console.log("Condition: " + ((this.updatedTaskName.invalid || this.trimmedUpdatedTask === '') && this.updateButtonPressed));
+
     }
   }
 }
