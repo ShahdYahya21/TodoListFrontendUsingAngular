@@ -35,20 +35,18 @@ export class TodoListComponent {
         this.todoTasks = tasks;
         console.log("todoTasks after addition: ");
         console.log(this.todoTasks);
-        this.todoTask = ''; // Reset todoTask after adding
+        this.todoTask = ''; 
       },
       (error) => {
-        console.error("Error adding task", error); // Handle any errors
+        console.error("Error adding task", error); 
       }
     );
   }
 
-  // Handle changes to 'searchedTodoItem'
   if (changes['searchedTodoItem']) {
     const currentSearchValue = changes['searchedTodoItem'].currentValue;
     const previousSearchValue = changes['searchedTodoItem'].previousValue;
 
-    // Ensure the value is not null or undefined before calling trim
     if (currentSearchValue && currentSearchValue.trim() !== '' && currentSearchValue !== previousSearchValue) {
       this.todoService.searchTasks(currentSearchValue).subscribe(
         (tasks) => {
@@ -57,7 +55,7 @@ export class TodoListComponent {
           console.log(this.todoTasks);
         },
         (error) => {
-          console.error("Error searching tasks", error); // Handle any errors
+          console.error("Error searching tasks", error); 
         }
       );
     }
