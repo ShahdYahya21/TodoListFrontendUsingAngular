@@ -15,8 +15,22 @@
             </div>
             <div>
                <input class="updateInput" type="text" [formControl]="updatedTaskName"
-                  [placeholder]="constants.PLACEHOLDER.UPDATE_TASK_PLACEHOLDER" />
+                  [placeholder]="constants.PLACEHOLDER.UPDATE_TASK_PLACEHOLDER" (input)="onInputChange()" />
             </div>
+             @if(confirmationButtonPressed){
+            <div class="errorContainer">
+               @if((updatedTaskName.invalid && updatedTaskName.hasError('required'))|| trimmedUpdatedTask === ''){
+               <p class="error">{{ constants.MESSAGES.VALIDATION_MESSAGES.TASK_REQUIRED }}</p>
+               }
+               @else if((updatedTaskName.invalid && updatedTaskName.hasError('size')) || trimmedUpdatedTask.length < 3){
+               <p class="error">{{ constants.MESSAGES.VALIDATION_MESSAGES.TASK_SIZE_LIMIT }}</p>
+               }
+            
+            </div>
+         }
+            
+            
+
             <div>
                <button class="updateButton" (click)="updateTodo()">
                   {{ constants.BUTTON_LABELS.UPDATE }}
@@ -25,10 +39,7 @@
                   {{ constants.BUTTON_LABELS.CANCEL }}
                </button>
             </div>
-
-            @if((updatedTaskName.invalid || trimmedUpdatedTask === '') && confirmationButtonPressed){
-            <p class="error">{{ constants.MESSAGES.TASK_REQUIRED }}</p>
-            }
+           
          </div>
       </div>
       }

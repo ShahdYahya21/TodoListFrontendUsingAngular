@@ -12,6 +12,7 @@ export const MAIN_CONSTANTS = {
     UPDATE: 'Update'
   },
   VALIDATION_MESSAGES: {
-    NEW_TASK_REQUIRED: 'newTask is required'
+    NEW_TASK_REQUIRED: 'newTask is required',
+    NEW_TASK_SIZE_LIMIT: 'Task title must be between 3 and 255 characters'
   }
 };

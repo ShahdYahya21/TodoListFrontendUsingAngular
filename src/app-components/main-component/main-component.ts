@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TodoListComponent } from '../todo-list-component/todo-list-component';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAIN_CONSTANTS } from './main-Component-Constants';
+import { customTaskTitleValidator } from '../validators/task-title.validator';
 
 
 
@@ -15,7 +16,10 @@ import { MAIN_CONSTANTS } from './main-Component-Constants';
 })
 export class MainComponent {
   constants = MAIN_CONSTANTS;
-  newTask = new FormControl('', Validators.required);
+  newTask = new FormControl(
+    '',
+    [Validators.required, customTaskTitleValidator()]
+  );
   SearchedTask = new FormControl();
   newTaskName = '';
   submitted = false;
@@ -35,6 +39,10 @@ export class MainComponent {
     this.newTask.reset();
     this.submitted = false;
 
+  }
+  onInputChange() {
+    const rawValue = this.newTask.value ?? '';
+    this.trimmedTask = rawValue.trim();
   }
 }
 

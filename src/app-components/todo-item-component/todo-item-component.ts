@@ -4,8 +4,7 @@ import { TodoItem } from '../../models';
 import { TODO_CONSTANTS } from './todo-item-component-constants';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TodoActions } from '../../models';
-
-
+import { customTaskTitleValidator } from '../validators/task-title.validator';
 
 @Component({
   selector: 'app-todo-item-component',
@@ -16,7 +15,11 @@ import { TodoActions } from '../../models';
 })
 export class TodoItemComponent {
   constants = TODO_CONSTANTS;
-  updatedTaskName = new FormControl('', Validators.required);
+  updatedTaskName = new FormControl(
+    '',
+    [Validators.required, customTaskTitleValidator()]
+  );
+  error = '';
   markAsDeleted = false;
   updateButtonPressed = false;
   confirmationButtonPressed = false;
@@ -48,8 +51,12 @@ export class TodoItemComponent {
 
   updateTodo() {
     this.confirmationButtonPressed = true;
-    this.trimmedUpdatedTask = (this.updatedTaskName.value ?? '').trim();
+    const rawValue = this.updatedTaskName.value ?? '';
+    this.trimmedUpdatedTask = rawValue.trim();
 
+    if (this.updatedTaskName.valid) {
+      this.confirmationButtonPressed = false;
+    }
     if (this.updatedTaskName.invalid || this.trimmedUpdatedTask === '') {
       return;
     }
@@ -70,13 +77,18 @@ export class TodoItemComponent {
     }
   }
 
+  onInputChange() {
+    const rawValue = this.updatedTaskName.value ?? '';
+    this.trimmedUpdatedTask = rawValue.trim();
+  }
+
 
 
   resetText() {
     if (this.localTodoItem) {
       this.updateButtonPressed = false;
       this.updatedTaskName.reset();
-      console.log("Condition: " + ((this.updatedTaskName.invalid || this.trimmedUpdatedTask === '') && this.updateButtonPressed));
+      this.confirmationButtonPressed = false;
 
     }
   }

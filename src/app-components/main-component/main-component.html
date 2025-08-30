@@ -15,17 +15,22 @@
     <div class="addTaskPrompt">{{ constants.TASK_PROMPT }}</div>
     <div class="addTaskContainer">
       <div class="input">
-        <input class="taskInput" type="text" [formControl]="newTask" [placeholder]="constants.TASK_PLACEHOLDER" />
+        <input class="taskInput" type="text" [formControl]="newTask" [placeholder]="constants.TASK_PLACEHOLDER" (input)="onInputChange()" />
       </div>
       <div>
         <button (click)="submit()" class="submitButton">{{ constants.SUBMIT_BUTTON }}</button>
       </div>
     </div>
+    @if(submitted){
     <div class="errorContainer">
-      @if((newTask.invalid || trimmedTask === '') && submitted) {
+      @if((newTask.invalid && newTask.hasError('required')) || trimmedTask === ''){
       <p class="error">{{ constants.VALIDATION_MESSAGES.NEW_TASK_REQUIRED }}</p>
       }
+      @else if((newTask.invalid && newTask.hasError('size')) || trimmedTask.length < 3){
+      <p class="error">{{ constants.VALIDATION_MESSAGES.NEW_TASK_SIZE_LIMIT }}</p>
+      }
     </div>
+  }
     <div class="addTaskPrompt">{{ constants.SEARCH_PROMPT }}</div>
     <div class="searchContainer">
       <input class="taskSearch" type="text" [formControl]="SearchedTask" [placeholder]="constants.SEARCH_PLACEHOLDER" />

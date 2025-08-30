@@ -1,5 +1,7 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges,AfterViewInit } from '@angular/core';
 import { TodoItemComponent } from '../todo-item-component/todo-item-component';
+import { Loader } from '../loader/loader';
+
 import { TodoService } from '../../todo-service';
 import { TodoItem, TodoActions } from '../../models';
 
@@ -8,7 +10,7 @@ import { TodoItem, TodoActions } from '../../models';
 @Component({
   selector: 'app-todo-list-component',
   standalone: true,
-  imports: [TodoItemComponent],
+  imports: [TodoItemComponent,Loader],
   templateUrl: './todo-list-component.html',
   styleUrls: ['./todo-list-component.css']
 })
@@ -17,32 +19,51 @@ export class TodoListComponent {
   @Input() searchedTodoItem: string = '';
 
   todoTasks: TodoItem[] = [];
+  isLoading: boolean = false;
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
     this.getTodos();
 
   }
+  
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['todoTask'] && changes['todoTask'].currentValue) {
-      this.todoService.addTask({ taskTitle: this.todoTask, completed: false }).subscribe(tasks => {
+  // Handle changes to 'todoTask'
+  if (changes['todoTask'] && changes['todoTask'].currentValue) {
+    this.todoService.addTask({ taskTitle: this.todoTask, completed: false }).subscribe(
+      (tasks) => {
         this.todoTasks = tasks;
         console.log("todoTasks after addition: ");
         console.log(this.todoTasks);
-        this.todoTask = '';
-      });
-
-    }
-
-    if (changes['searchedTodoItem'] && changes['searchedTodoItem'].currentValue !== changes['searchedTodoItem'].previousValue) {
-      this.todoService.searchTasks(this.searchedTodoItem).subscribe(tasks => {
-        this.todoTasks = tasks;
-        console.log("todoTasks after searching: ");
-        console.log(this.todoTasks);
-      });
-    }
-
+        this.todoTask = ''; // Reset todoTask after adding
+      },
+      (error) => {
+        console.error("Error adding task", error); // Handle any errors
+      }
+    );
   }
+
+  // Handle changes to 'searchedTodoItem'
+  if (changes['searchedTodoItem']) {
+    const currentSearchValue = changes['searchedTodoItem'].currentValue;
+    const previousSearchValue = changes['searchedTodoItem'].previousValue;
+
+    // Ensure the value is not null or undefined before calling trim
+    if (currentSearchValue && currentSearchValue.trim() !== '' && currentSearchValue !== previousSearchValue) {
+      this.todoService.searchTasks(currentSearchValue).subscribe(
+        (tasks) => {
+          this.todoTasks = tasks;
+          console.log("todoTasks after searching: ");
+          console.log(this.todoTasks);
+        },
+        (error) => {
+          console.error("Error searching tasks", error); // Handle any errors
+        }
+      );
+    }
+  }
+}
+
 
   handleChange(action: TodoActions): void {
     if (action.deleteId) {
@@ -56,11 +77,20 @@ export class TodoListComponent {
 
 
   getTodos() {
-    this.todoService.getTasks().subscribe(tasks => {
-      this.todoTasks = tasks;
-      console.log("todoTasks after fetching from backend: ");
-      console.log(this.todoTasks);
-    });
+    this.isLoading = true; 
+    
+    this.todoService.getTasks().subscribe(
+      tasks => {
+        this.todoTasks = tasks;
+        console.log("todoTasks after fetching from backend: ");
+        console.log(this.todoTasks);
+        this.isLoading = false;
+      },
+      error => {
+        console.error("Error fetching tasks: ", error);
+        this.isLoading = false; 
+      }
+    );
   }
 
   deleteTodo(todoId: number) {

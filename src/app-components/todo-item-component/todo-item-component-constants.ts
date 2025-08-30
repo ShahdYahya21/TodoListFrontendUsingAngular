@@ -1,8 +1,11 @@
 export const TODO_CONSTANTS = {
   MESSAGES: {
     DELETE_CONFIRMATION: 'Are you sure you want to delete this to-do task?',
-    Update_MESSAGE: 'Are you sure you want to update this to-do task?',
-    TASK_REQUIRED: 'Task is required'
+    Update_MESSAGE: 'Update to-do Title',
+    VALIDATION_MESSAGES: {
+      TASK_REQUIRED: 'Task is required',
+      TASK_SIZE_LIMIT: 'Task title must be between 3 and 255 characters'
+    }
   },
   BUTTON_LABELS: {
     DELETE: 'Delete',
@@ -13,6 +16,6 @@ export const TODO_CONSTANTS = {
     COMPLETED_TASK: { 'text-decoration': 'line-through' }
   },
   PLACEHOLDER: {
-      UPDATE_TASK_PLACEHOLDER: 'Update your task here'
+    UPDATE_TASK_PLACEHOLDER: 'Update your task here'
   }
 };
